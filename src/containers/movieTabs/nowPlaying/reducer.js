@@ -1,10 +1,11 @@
+import { } from './actions';
 import { fromJS } from 'immutable';
 
 const initialState = fromJS({
-    loginPage: [],
+    nowPlaying: []
 });
 
-function LoginPageReducer(state = initialState, action) {
+function nowPayingReducer(state = initialState, action) {
     switch (action.type) {
 
         default:
@@ -12,4 +13,4 @@ function LoginPageReducer(state = initialState, action) {
     }
 }
 
-export default LoginPageReducer;
+export default nowPayingReducer;

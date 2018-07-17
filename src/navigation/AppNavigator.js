@@ -1,14 +1,21 @@
+import React from 'react';
 import { connect } from 'react-redux';
-import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
+import { createStackNavigator, createDrawerNavigator, createBottomTabNavigator } from 'react-navigation';
 import {
   reduxifyNavigator,
   createReactNavigationReduxMiddleware,
 } from 'react-navigation-redux-helpers';
-import LoginScreen from '../containers/login/LoginScreen';
-import SignupScreen from '../containers/signup/signupScreen';
 import Movies from '../containers/movies/movies';
-import Ranks from '../containers/ranks/ranks';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+
+// Movie Tab Pages
+import NowPlaying from '../containers/movieTabs/nowPlaying/nowPlaying';
+import TopRated from '../containers/movieTabs/topRated/topRated';
+import Popular from '../containers/movieTabs/popular/popular';
+import Upcoming from '../containers/movieTabs/upcoming/upcoming';
+
+import TVShows from '../containers/tvShows/tvShows';
+import { MaterialIcons, Entypo } from '@expo/vector-icons';
+
 
 const middleware = createReactNavigationReduxMiddleware(
   'root',
@@ -30,16 +37,42 @@ const middleware = createReactNavigationReduxMiddleware(
 // const DrawerStack = createDrawerNavigator({
 
 // });
+const MovieTabStack = createBottomTabNavigator({
+  'Now Playing': { screen: NowPlaying },
+  'Upcoming': { screen: Upcoming },
+  'Top Rated': { screen: TopRated },
+  'Popular': { screen: Popular }
+},
+  {
+    navigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, tintColor }) => {
+        const { routeName } = navigation.state;
+        let icon;
+        if (routeName === 'Now Playing') {
+          icon = <MaterialIcons name="airplay" size={25} color={tintColor} />;
+        } else if (routeName === 'Upcoming') {
+          icon = <Entypo name="calendar" size={25} color={tintColor} />;
+        } else if (routeName === "Top Rated") {
+          icon = <MaterialIcons name="star" size={25} color={tintColor} />;
+        } else if (routeName === 'Popular') {
+          icon = <MaterialIcons name="trending-up" size={25} color={tintColor} />;
+        }
+        return icon;
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray',
+    },
+  });
 
 const MoviesStack = createStackNavigator({
-  Movies: { screen: Movies },
+  Movies: { screen: MovieTabStack },
 }, {
     navigationOptions: ({ navigation }) => ({
       headerTitle: 'Movies',
       drawerLabel: 'Movies',
-      drawerIcon: ({ tintColor }) => (
-        <MaterialIcons name="movie-creation" size={24} style={{ color: tintColor }} />
-      ),
+      headerLeft: <MaterialIcons style={{ padding: 20 }} name="menu" size={35} color="white" onPress={() => navigation.toggleDrawer()} />,
       headerStyle: {
         backgroundColor: '#e00e0e',
       },
@@ -50,22 +83,32 @@ const MoviesStack = createStackNavigator({
     })
   });
 
-const RankStack = createStackNavigator({
-  Ranks: { screen: Ranks },
+const TVShowsStack = createStackNavigator({
+  TVShows: { screen: TVShows },
 }, {
     navigationOptions: {
-      drawerLabel: 'Ranks',
+      headerTitle: 'TV Shows',
+      drawerIcon: ({ tintColor }) => (
+        <MaterialIcons name="movie-creation" size={24} style={{ color: tintColor }} />
+      ),
+      headerStyle: {
+        backgroundColor: '#e00e0e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
     },
   });
 
 const RootNavigator = createDrawerNavigator({
-  Movies: {
+  'Movies': {
     path: '/',
     screen: MoviesStack,
   },
-  Ranks: {
-    path: '/ranks',
-    screen: RankStack
+  'TV Shows': {
+    path: '/tvshows',
+    screen: TVShowsStack
   }
 },
   {

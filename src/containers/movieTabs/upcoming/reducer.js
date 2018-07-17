@@ -1,10 +1,11 @@
+import { } from './actions';
 import { fromJS } from 'immutable';
 
 const initialState = fromJS({
-    signupPage: [],
+    upcoming: []
 });
 
-function signupReducer(state = initialState, action) {
+function upcomingReducer(state = initialState, action) {
     switch (action.type) {
 
         default:
@@ -12,4 +13,4 @@ function signupReducer(state = initialState, action) {
     }
 }
 
-export default signupReducer;
+export default upcomingReducer;

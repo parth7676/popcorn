@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import makeSelectStudentsPage from './selector';
-import { createStructuredSelector } from 'reselect';
 import { StyleSheet, Text, View, Button } from 'react-native'
 import * as studentActions from './actions';
 import { Ionicons } from '@expo/vector-icons';
@@ -28,6 +26,7 @@ class Movies extends React.Component {
     }
 
     render() {
+        console.log(this.props.state)
         const styles = StyleSheet.create({
             container: {
                 flex: 1,
@@ -49,7 +48,7 @@ class Movies extends React.Component {
                 <Text style={styles.instructions}>
                     This is great
           </Text>
-                <Button onPress={() => this.loadStudents()} title="Button"></Button>
+                <Button onPress={() => this.props.navigation.navigate('TV Shows')} title="Button"></Button>
             </View >
         )
     }
@@ -57,7 +56,7 @@ class Movies extends React.Component {
 
 Movies.propTypes = {
     students: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired,
+    state: PropTypes.object.isRequired,
 };
 
 Movies.defaultProps = {
@@ -65,8 +64,8 @@ Movies.defaultProps = {
     actions: {},
 }
 
-const mapStateToProps = createStructuredSelector({
-    // students: makeSelectStudentsPage(),
+const mapStateToProps = state => ({
+
 });
 
 function mapDispatchToProps(dispatch) {
