@@ -41,10 +41,10 @@ const MovieTabStack = createBottomTabNavigator({
   'Now Playing': { screen: NowPlaying },
   'Upcoming': { screen: Upcoming },
   'Top Rated': { screen: TopRated },
-  'Popular': { screen: Popular }
+  'Trending': { screen: Popular }
 },
   {
-    initialRouteName: 'Top Rated',
+    initialRouteName: 'Trending',
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
@@ -55,7 +55,7 @@ const MovieTabStack = createBottomTabNavigator({
           icon = <Entypo name="calendar" size={25} color={tintColor} />;
         } else if (routeName === "Top Rated") {
           icon = <MaterialIcons name="star" size={25} color={tintColor} />;
-        } else if (routeName === 'Popular') {
+        } else if (routeName === 'Trending') {
           icon = <MaterialIcons name="trending-up" size={25} color={tintColor} />;
         }
         return icon;
