@@ -1,0 +1,2 @@
+export const LOAD_TOPRATED_MOVIES = 'src/movieTabs/LOAD_TOPRATED_MOVIES';
+export const SAVE_TOPRATED_MOVIES = 'src/movieTabs/SAVE_TOPRATED_MOVIES';

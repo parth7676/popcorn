@@ -44,7 +44,7 @@ const MovieTabStack = createBottomTabNavigator({
   'Popular': { screen: Popular }
 },
   {
-    initialRouteName: 'Upcoming',
+    initialRouteName: 'Top Rated',
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;

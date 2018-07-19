@@ -3,6 +3,7 @@ import { loadAPIConfigurationSagas } from './src/containers/app/sagas';
 import { loadStudentsSagas } from './src/containers/movies/sagas';
 import { loadNowPlayingSagas } from './src/containers/movieTabs/nowPlaying/sagas';
 import { loadUpcomingSagas } from './src/containers/movieTabs/upcoming/sagas';
+import { loadTopRatedSagas } from './src/containers/movieTabs/topRated/sagas';
 
 export default function* rootSaga() {
     yield all([
@@ -10,5 +11,6 @@ export default function* rootSaga() {
         loadStudentsSagas(),
         loadNowPlayingSagas(),
         loadUpcomingSagas(),
+        loadTopRatedSagas()
     ])
 }
