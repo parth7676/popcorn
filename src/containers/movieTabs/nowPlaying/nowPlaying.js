@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Ionicons } from '@expo/vector-icons';
-import { Container, Header, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button, Spinner } from 'native-base';
+import { Container, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button, Spinner, Icon } from 'native-base';
 import * as  nowPlayingActions from './actions';
 import { API_KEY } from '../../../constants';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image, View } from 'react-native';
+import tmdbStacked from '../../../../assets/tmdbStacked.png';
 
 class NowPlaying extends React.Component {
 
@@ -38,7 +39,6 @@ class NowPlaying extends React.Component {
     }
 
     render() {
-        console.log(this.state.pageIndex);
         const styles = StyleSheet.create({
             loadMore: {
                 alignItems: 'center',
@@ -51,6 +51,17 @@ class NowPlaying extends React.Component {
                 justifyContent: 'center',
                 alignItems: 'center',
             },
+            ratingContainer: {
+                marginTop: 5,
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+            },
+            ratingImage: {
+                width: 20,
+                height: 20,
+                marginRight: 5
+            },
+
         });
         let movies = this.props.nowPlayingMovies.toJS().nowPlayingMovies && this.props.nowPlayingMovies.toJS().nowPlayingMovies || [];
         let imageConfig = this.props.apiConfig.toJS().apiConfig.images;
@@ -63,13 +74,14 @@ class NowPlaying extends React.Component {
                     <Thumbnail square source={{ uri: `${imageBaseURL}/${imageSize}/${movie.poster_path}` }} />
                 </Left>
                 <Body>
+                    <Text note>{new Date(movie.release_date).getFullYear()}</Text>
                     <Text>{movie.title}</Text>
-                    <Text note numberOfLines={1}>{movie.release_date}</Text>
+                    <View style={styles.ratingContainer}>
+                        <Image source={tmdbStacked} style={styles.ratingImage} />
+                        <Text>{movie.vote_average}</Text>
+                    </View>
                 </Body>
                 <Right>
-                    <Button transparent>
-                        <Text>View</Text>
-                    </Button>
                 </Right>
             </ListItem>
 
@@ -77,6 +89,7 @@ class NowPlaying extends React.Component {
         return (
             <Container>
                 <Content>
+
                     <List>
                         {listItems}
                         {(this.state.pageIndex <= this.props.nowPlayingMovies.toJS().totalPages && !this.state.dataLoading) &&
