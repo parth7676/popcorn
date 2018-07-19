@@ -1,0 +1,2 @@
+export const LOAD_UPCOMING_MOVIES = 'src/movieTabs/LOAD_UPCOMING_MOVIES';
+export const SAVE_UPCOMING_MOVIES = 'src/movieTabs/SAVE_UPCOMING_MOVIES';

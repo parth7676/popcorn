@@ -8,6 +8,7 @@ import * as  nowPlayingActions from './actions';
 import { API_KEY } from '../../../constants';
 import { StyleSheet, Image, View } from 'react-native';
 import tmdbStacked from '../../../../assets/tmdbStacked.png';
+import { dateFormatter } from '../../../common';
 
 class NowPlaying extends React.Component {
 
@@ -74,7 +75,7 @@ class NowPlaying extends React.Component {
                     <Thumbnail square source={{ uri: `${imageBaseURL}/${imageSize}/${movie.poster_path}` }} />
                 </Left>
                 <Body>
-                    <Text note>{new Date(movie.release_date).getFullYear()}</Text>
+                    <Text note>{dateFormatter(new Date(movie.release_date))}</Text>
                     <Text>{movie.title}</Text>
                     <View style={styles.ratingContainer}>
                         <Image source={tmdbStacked} style={styles.ratingImage} />
