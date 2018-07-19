@@ -61,7 +61,7 @@ const MovieTabStack = createBottomTabNavigator({
       },
     }),
     tabBarOptions: {
-      activeTintColor: 'tomato',
+      activeTintColor: '#e00e0e',
       inactiveTintColor: 'gray',
     },
   });
@@ -88,9 +88,6 @@ const TVShowsStack = createStackNavigator({
 }, {
     navigationOptions: {
       headerTitle: 'TV Shows',
-      drawerIcon: ({ tintColor }) => (
-        <MaterialIcons name="movie-creation" size={24} style={{ color: tintColor }} />
-      ),
       headerStyle: {
         backgroundColor: '#e00e0e',
       },

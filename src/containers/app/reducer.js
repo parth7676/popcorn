@@ -8,7 +8,7 @@ const initialState = fromJS({
 function appReducer(state = initialState, action) {
     switch (action.type) {
         case SAVE_API_CONFIG:
-            return state.set('apiConfig', action.payload.data);
+            return state.set('apiConfig', fromJS(action.payload.data));
         default:
             return state;
     }

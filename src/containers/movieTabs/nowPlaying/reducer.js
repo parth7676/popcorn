@@ -1,16 +1,22 @@
-import { } from './actions';
+import { SAVE_NOWPLAYING_MOVIES } from './constants';
 import { fromJS } from 'immutable';
+import update from 'immutability-helper';
 
 const initialState = fromJS({
-    nowPlaying: []
+    nowPlayingMovies: [],
+    totalPages: 0
 });
 
-function nowPayingReducer(state = initialState, action) {
+function nowPlayingReducer(state = initialState, action) {
     switch (action.type) {
-
+        case SAVE_NOWPLAYING_MOVIES:
+            let movies = state.get('nowPlayingMovies').toJS();
+            movies.push(...action.payload.data.results);
+            return state.set('nowPlayingMovies', fromJS(movies))
+                .set('totalPages', action.payload.data.total_pages);
         default:
             return state;
     }
 }
 
-export default nowPayingReducer;
+export default nowPlayingReducer;
