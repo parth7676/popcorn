@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Ionicons } from '@expo/vector-icons';
-import { Container, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button, Spinner, Icon } from 'native-base';
+import { Container, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button, Icon } from 'native-base';
 import * as  nowPlayingActions from './actions';
 import { API_KEY } from '../../../constants';
-import { StyleSheet, Image, View } from 'react-native';
+import { StyleSheet, Image, View, TouchableHighlight } from 'react-native';
 import tmdbStacked from '../../../../assets/tmdbStacked.png';
 import { dateFormatter } from '../../../common';
 
@@ -16,9 +16,9 @@ class NowPlaying extends React.Component {
         super(props);
         this.state = {
             pageIndex: 1,
-            dataLoading: true,
         }
         this.loadMore = this.loadMore.bind(this);
+        this.openDetails = this.openDetails.bind(this);
     }
 
     componentDidMount() {
@@ -30,9 +30,12 @@ class NowPlaying extends React.Component {
         let newPageIndex = this.state.pageIndex + 1;
         this.setState({ pageIndex: newPageIndex });
         if (newPageIndex <= totalPages) {
-            this.setState({ dataLoading: false });
             this.props.actions.laodNowPlayingMovies(API_KEY, newPageIndex);
         }
+    }
+
+    openDetails(movie) {
+        this.props.navigation.navigate('MovieDetails', { movieId: movie.id, title: movie.title })
     }
 
     componentWillReceiveProps() {
@@ -62,6 +65,13 @@ class NowPlaying extends React.Component {
                 height: 20,
                 marginRight: 5
             },
+            listFooter: {
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: 10
+            }
 
         });
         let movies = this.props.nowPlayingMovies.toJS().nowPlayingMovies && this.props.nowPlayingMovies.toJS().nowPlayingMovies || [];
@@ -69,39 +79,33 @@ class NowPlaying extends React.Component {
         let imageBaseURL = imageConfig && imageConfig.base_url;
         let imageSize = imageConfig && imageConfig.poster_sizes[4];
 
-        const listItems = movies && movies.map((movie) =>
-            <ListItem thumbnail key={movie.id}>
-                <Left>
-                    <Thumbnail square source={{ uri: `${imageBaseURL}/${imageSize}/${movie.poster_path}` }} />
-                </Left>
-                <Body>
-                    <Text note>{dateFormatter(new Date(movie.release_date))}</Text>
-                    <Text>{movie.title}</Text>
-                    <View style={styles.ratingContainer}>
-                        <Image source={tmdbStacked} style={styles.ratingImage} />
-                        <Text>{movie.vote_average}</Text>
-                    </View>
-                </Body>
-                <Right>
-                </Right>
-            </ListItem>
-
-        );
         return (
             <Container>
                 <Content>
-
-                    <List>
-                        {listItems}
-                        {(this.state.pageIndex <= this.props.nowPlayingMovies.toJS().totalPages && !this.state.dataLoading) &&
-                            <ListItem style={styles.loadMore}>
-                                <Button transparent onPress={() => this.loadMore()} >
-                                    <Text>Load More</Text>
-                                </Button>
-                            </ListItem>}
+                    <List scrollEventThrottle={1} dataArray={movies} renderRow={(movie) =>
+                        <TouchableHighlight key={movie.id}>
+                            <ListItem button thumbnail onPress={() => this.openDetails(movie)}>
+                                <Left>
+                                    <Thumbnail square source={{ uri: `${imageBaseURL}/${imageSize}/${movie.poster_path}` }} />
+                                </Left>
+                                <Body>
+                                    <Text note>{dateFormatter(new Date(movie.release_date))}</Text>
+                                    <Text>{movie.title}</Text>
+                                    <View style={styles.ratingContainer}>
+                                        <Image source={tmdbStacked} style={styles.ratingImage} />
+                                        <Text>{movie.vote_average}</Text>
+                                    </View>
+                                </Body>
+                                <Right>
+                                </Right>
+                            </ListItem >
+                        </TouchableHighlight>}
+                        renderFooter={() =>
+                            <View style={styles.listFooter}>
+                                <Button transparent onPress={() => this.loadMore()}><Text>Load More</Text></Button>
+                            </View>}>
                     </List>
                 </Content>
-                {this.state.dataLoading && <Spinner style={styles.spinnerStyle} color='red' />}
             </Container>
         )
     }

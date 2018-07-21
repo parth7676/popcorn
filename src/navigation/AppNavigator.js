@@ -14,6 +14,7 @@ import Popular from '../containers/movieTabs/popular/popular';
 import Upcoming from '../containers/movieTabs/upcoming/upcoming';
 
 import TVShows from '../containers/tvShows/tvShows';
+import DetailsPage from '../sharedComponents/detailsPage/detailPage';
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
 
 
@@ -41,10 +42,10 @@ const MovieTabStack = createBottomTabNavigator({
   'Now Playing': { screen: NowPlaying },
   'Upcoming': { screen: Upcoming },
   'Top Rated': { screen: TopRated },
-  'Trending': { screen: Popular }
+  'Trending': { screen: Popular },
 },
   {
-    initialRouteName: 'Trending',
+    initialRouteName: 'Now Playing',
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
@@ -68,8 +69,8 @@ const MovieTabStack = createBottomTabNavigator({
   });
 
 const MoviesStack = createStackNavigator({
-  Movies: { screen: MovieTabStack },
-}, {
+  Movies: {
+    screen: MovieTabStack,
     navigationOptions: ({ navigation }) => ({
       headerTitle: 'Movies',
       drawerLabel: 'Movies',
@@ -82,13 +83,16 @@ const MoviesStack = createStackNavigator({
         fontWeight: 'bold',
       },
     })
-  });
+  },
+  MovieDetails: {
+    screen: DetailsPage,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: navigation.state.params.title
+    })
+  }
 
-const TVShowsStack = createStackNavigator({
-  TVShows: { screen: TVShows },
 }, {
-    navigationOptions: {
-      headerTitle: 'TV Shows',
+    navigationOptions: ({ navigation }) => ({
       headerStyle: {
         backgroundColor: '#e00e0e',
       },
@@ -96,7 +100,24 @@ const TVShowsStack = createStackNavigator({
       headerTitleStyle: {
         fontWeight: 'bold',
       },
-    },
+    })
+  });
+
+const TVShowsStack = createStackNavigator({
+  TVShows: { screen: DetailsPage },
+}, {
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'TV Shows',
+      drawerLabel: 'TV Shows',
+      headerLeft: <MaterialIcons style={{ padding: 20 }} name="menu" size={35} color="white" onPress={() => navigation.toggleDrawer()} />,
+      headerStyle: {
+        backgroundColor: '#e00e0e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }),
   });
 
 const RootNavigator = createDrawerNavigator({
