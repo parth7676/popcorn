@@ -74,7 +74,7 @@ const MoviesStack = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       headerTitle: 'Movies',
       drawerLabel: 'Movies',
-      headerLeft: <MaterialIcons style={{ padding: 20 }} name="menu" size={35} color="white" onPress={() => navigation.toggleDrawer()} />,
+      headerLeft: <MaterialIcons style={{ paddingLeft: 20 }} name="menu" size={35} color="white" onPress={() => navigation.toggleDrawer()} />,
       headerStyle: {
         backgroundColor: '#e00e0e',
       },
@@ -87,7 +87,7 @@ const MoviesStack = createStackNavigator({
   MovieDetails: {
     screen: DetailsPage,
     navigationOptions: ({ navigation }) => ({
-      headerTitle: navigation.state.params.title
+      headerTitle: navigation.state.params.title,
     })
   }
 

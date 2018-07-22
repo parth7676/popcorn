@@ -5,6 +5,7 @@ import { loadNowPlayingSagas } from './src/containers/movieTabs/nowPlaying/sagas
 import { loadUpcomingSagas } from './src/containers/movieTabs/upcoming/sagas';
 import { loadTopRatedSagas } from './src/containers/movieTabs/topRated/sagas';
 import { loadPopularSagas } from './src/containers/movieTabs/popular/sagas';
+import { loadMovieDetailsSagas } from './src/sharedComponents/detailsPage/sagas';
 
 export default function* rootSaga() {
     yield all([
@@ -13,6 +14,7 @@ export default function* rootSaga() {
         loadNowPlayingSagas(),
         loadUpcomingSagas(),
         loadTopRatedSagas(),
-        loadPopularSagas()
+        loadPopularSagas(),
+        loadMovieDetailsSagas()
     ])
 }

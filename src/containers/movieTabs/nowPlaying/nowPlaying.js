@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Ionicons } from '@expo/vector-icons';
-import { Container, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button, Icon } from 'native-base';
+import { Container, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button, Icon, Header } from 'native-base';
 import * as  nowPlayingActions from './actions';
 import { API_KEY } from '../../../constants';
 import { StyleSheet, Image, View, TouchableHighlight } from 'react-native';
