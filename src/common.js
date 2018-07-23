@@ -32,3 +32,4 @@ export function moneyFormatter(num, decimals) {
     }
     return (num / si[i].value).toFixed(decimals).replace(rx, "$1") + si[i].symbol;
   }
+  

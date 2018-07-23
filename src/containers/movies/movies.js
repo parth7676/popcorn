@@ -26,7 +26,6 @@ class Movies extends React.Component {
     }
 
     render() {
-        console.log(this.props.state)
         const styles = StyleSheet.create({
             container: {
                 flex: 1,

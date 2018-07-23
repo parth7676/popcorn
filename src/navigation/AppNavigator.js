@@ -104,7 +104,7 @@ const MoviesStack = createStackNavigator({
   });
 
 const TVShowsStack = createStackNavigator({
-  TVShows: { screen: DetailsPage },
+  TVShows: { screen: TVShows },
 }, {
     navigationOptions: ({ navigation }) => ({
       headerTitle: 'TV Shows',

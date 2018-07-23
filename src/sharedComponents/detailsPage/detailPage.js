@@ -24,6 +24,7 @@ class DetailsPage extends React.Component {
 
     componentDidMount() {
         this.props.actions.loadMovieDetails(API_KEY, this.props.navigation.state.params.movieId);
+        this.props.actions.loadMovieExternalIds(API_KEY, this.props.navigation.state.params.movieId);
     }
 
     render() {
@@ -80,6 +81,8 @@ class DetailsPage extends React.Component {
         let genreString = '';
         movieDetails.genres && movieDetails.genres.forEach(o => genreString += `${o.name}, `);
 
+        let externalIds = this.props.movieDetails.toJS().externalIds;
+        let cast = this.props.movieDetails.toJS().movieCast;
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.slider}>
@@ -107,13 +110,17 @@ class DetailsPage extends React.Component {
                         textStyle={{ color: colorPellete.grey }}
                         activeTabStyle={{ backgroundColor: colorPellete.black }}
                         activeTextStyle={{ color: '#fff', fontWeight: 'normal' }}>
-                        <InfoTab movieDetails={{ ...movieDetails }} />
+                        <InfoTab movieDetails={{ ...movieDetails }} externalIds={{ ...externalIds }} />
                     </Tab>
                     <Tab heading="CAST" tabStyle={{ backgroundColor: colorPellete.black }}
                         textStyle={{ color: colorPellete.grey }}
                         activeTabStyle={{ backgroundColor: colorPellete.black }}
                         activeTextStyle={{ color: '#fff', fontWeight: 'normal' }}>
-                        <CastTab />
+                        <CastTab
+                            cast={cast}
+                            imageBaseURL={imageBaseURL}
+                            imageSize={imageSize}
+                            loadCast={() => this.props.actions.loadMovieCast(API_KEY, this.props.navigation.state.params.movieId)} />
                     </Tab>
                     <Tab heading="REVIEWS" tabStyle={{ backgroundColor: colorPellete.black }}
                         textStyle={{ color: colorPellete.grey }}
@@ -136,12 +143,12 @@ DetailsPage.propTypes = {
 DetailsPage.defaultProps = {
     actions: {},
     movieDetails: {},
-    apiConfig: {}
+    apiConfig: {},
 }
 
 const mapStateToProps = state => ({
     movieDetails: state.get('movieDetails'),
-    apiConfig: state.get('globalState')
+    apiConfig: state.get('globalState'),
 });
 
 function mapDispatchToProps(dispatch) {
