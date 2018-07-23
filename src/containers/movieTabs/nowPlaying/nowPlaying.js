@@ -72,7 +72,6 @@ class NowPlaying extends React.Component {
                 alignItems: 'center',
                 padding: 10
             }
-
         });
         let movies = this.props.nowPlayingMovies.toJS().nowPlayingMovies && this.props.nowPlayingMovies.toJS().nowPlayingMovies || [];
         let imageConfig = this.props.apiConfig.toJS().apiConfig.images;

@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Container, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button, Spinner, Icon } from 'native-base';
 import * as  upcomingActions from './actions';
 import { API_KEY } from '../../../constants';
-import { StyleSheet, Image, View } from 'react-native';
+import { StyleSheet, Image, View, TouchableHighlight } from 'react-native';
 import tmdbStacked from '../../../../assets/tmdbStacked.png';
 import { dateFormatter } from '../../../common';
 
@@ -19,6 +19,8 @@ class Upcoming extends React.Component {
             dataLoading: true,
         }
         this.loadMore = this.loadMore.bind(this);
+        this.openDetails = this.openDetails.bind(this);
+
     }
 
     componentDidMount() {
@@ -33,6 +35,10 @@ class Upcoming extends React.Component {
             this.setState({ dataLoading: false });
             this.props.actions.loadUpcomingMovies(API_KEY, newPageIndex);
         }
+    }
+
+    openDetails(movie) {
+        this.props.navigation.navigate('MovieDetails', { movieId: movie.id, title: movie.title })
     }
 
     componentWillReceiveProps() {
@@ -62,42 +68,44 @@ class Upcoming extends React.Component {
                 height: 20,
                 marginRight: 5
             },
-
+            listFooter: {
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: 10
+            }
         });
         let movies = this.props.upcomingMovies.toJS().upcomingMovies && this.props.upcomingMovies.toJS().upcomingMovies || [];
         let imageConfig = this.props.apiConfig.toJS().apiConfig.images;
         let imageBaseURL = imageConfig && imageConfig.base_url;
         let imageSize = imageConfig && imageConfig.poster_sizes[4];
-
-        const listItems = movies && movies.map((movie) =>
-            <ListItem thumbnail key={movie.id}>
-                <Left>
-                    <Thumbnail square source={{ uri: `${imageBaseURL}/${imageSize}/${movie.poster_path}` }} />
-                </Left>
-                <Body>
-                    <Text note>{dateFormatter(new Date(movie.release_date))}</Text>
-                    <Text>{movie.title}</Text>
-                    <View style={styles.ratingContainer}>
-                        <Image source={tmdbStacked} style={styles.ratingImage} />
-                        <Text>{movie.vote_average}</Text>
-                    </View>
-                </Body>
-                <Right>
-                </Right>
-            </ListItem>
-
-        );
+        
         return (
             <Container>
                 <Content>
-                    <List>
-                        {listItems}
-                        {(this.state.pageIndex <= this.props.upcomingMovies.toJS().totalPages && !this.state.dataLoading) &&
-                            <ListItem style={styles.loadMore}>
-                                <Button transparent onPress={() => this.loadMore()} >
-                                    <Text>Load More</Text>
-                                </Button>
-                            </ListItem>}
+                    <List dataArray={movies} renderRow={(movie) =>
+                        <TouchableHighlight key={movie.id}>
+                            <ListItem button thumbnail onPress={() => this.openDetails(movie)}>
+                                <Left>
+                                    <Thumbnail square source={{ uri: `${imageBaseURL}/${imageSize}/${movie.poster_path}` }} />
+                                </Left>
+                                <Body>
+                                    <Text note>{dateFormatter(new Date(movie.release_date))}</Text>
+                                    <Text>{movie.title}</Text>
+                                    <View style={styles.ratingContainer}>
+                                        <Image source={tmdbStacked} style={styles.ratingImage} />
+                                        <Text>{movie.vote_average}</Text>
+                                    </View>
+                                </Body>
+                                <Right>
+                                </Right>
+                            </ListItem >
+                        </TouchableHighlight>}
+                        renderFooter={() =>
+                            <View style={styles.listFooter}>
+                                <Button transparent onPress={() => this.loadMore()}><Text>Load More</Text></Button>
+                            </View>}>
                     </List>
                 </Content>
                 {this.state.dataLoading && <Spinner style={styles.spinnerStyle} color='red' />}

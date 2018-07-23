@@ -58,7 +58,7 @@ class DetailsPage extends React.Component {
             descriptionTitle: {
                 marginLeft: 135,
                 fontWeight: 'bold',
-                fontSize: 25,
+                fontSize: 20,
                 color: colorPellete.white
             },
             badge: {
