@@ -1,22 +1,28 @@
 import { all } from 'redux-saga/effects';
 import { loadAPIConfigurationSagas } from './src/containers/app/sagas';
-import { loadStudentsSagas } from './src/containers/movies/sagas';
 import { loadNowPlayingSagas } from './src/containers/movieTabs/nowPlaying/sagas';
 import { loadUpcomingSagas } from './src/containers/movieTabs/upcoming/sagas';
 import { loadTopRatedSagas } from './src/containers/movieTabs/topRated/sagas';
 import { loadPopularSagas } from './src/containers/movieTabs/popular/sagas';
 import { loadMovieDetailsSagas, loadMovieExternalIdsSagas, loadCastSagas } from './src/sharedComponents/detailsPage/sagas';
 
+import { loadPopularTVShowsSagas } from './src/containers/tvShowTabs/popular/sagas';
+import { loadTopRatedTVShowsSagas } from './src/containers/tvShowTabs/topRated/sagas';
+import { loadTVShowDetailsSagas, loadTVShowExternalIdsSagas, loadTVShowCastSagas } from './src/sharedComponents/tvShowDetailsPage/sagas';
 export default function* rootSaga() {
     yield all([
         loadAPIConfigurationSagas(),
-        loadStudentsSagas(),
         loadNowPlayingSagas(),
         loadUpcomingSagas(),
         loadTopRatedSagas(),
         loadPopularSagas(),
         loadMovieDetailsSagas(),
         loadMovieExternalIdsSagas(),
-        loadCastSagas()
+        loadCastSagas(),
+        loadPopularTVShowsSagas(),
+        loadTopRatedTVShowsSagas(),
+        loadTVShowDetailsSagas(),
+        loadTVShowExternalIdsSagas(),
+        loadTVShowCastSagas()
     ])
 }
