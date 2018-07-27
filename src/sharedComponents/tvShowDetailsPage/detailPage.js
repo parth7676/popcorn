@@ -26,6 +26,7 @@ class DetailsPage extends React.Component {
     componentDidMount() {
         this.props.actions.loadTVShowDetails(API_KEY, this.props.navigation.state.params.tvShowId);
         this.props.actions.loadTVShowExternalIds(API_KEY, this.props.navigation.state.params.tvShowId);
+        this.props.actions.loadTVShowPosters(API_KEY, this.props.navigation.state.params.tvShowId);
     }
 
     render() {
@@ -83,14 +84,13 @@ class DetailsPage extends React.Component {
         tvShowDetails.genres && tvShowDetails.genres.forEach(o => genreString += `${o.name}, `);
         let externalIds = this.props.tvShowDetails.toJS().externalIds;
         let cast = this.props.tvShowDetails.toJS().tvShowCast;
+        let posters = [];
+        this.props.tvShowDetails.toJS().posters && this.props.tvShowDetails.toJS().posters.forEach(p => posters.push(`${imageBaseURL}/${imageSize}/${p.file_path}`));
+
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.slider}>
-                    <ImageSlider images={[
-                        'http://placeimg.com/640/480/any',
-                        'http://placeimg.com/640/480/any',
-                        'http://placeimg.com/640/480/any'
-                    ]} />
+                    <ImageSlider images={posters} />
                 </View>
                 {/* <View style={styles.poster}></View> */}
                 <Image style={styles.poster} source={{ uri: `${imageBaseURL}/${imageSize}/${tvShowDetails.poster_path}` }} />
