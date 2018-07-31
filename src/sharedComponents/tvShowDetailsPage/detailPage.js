@@ -86,7 +86,6 @@ class DetailsPage extends React.Component {
         let cast = this.props.tvShowDetails.toJS().tvShowCast;
         let posters = [];
         this.props.tvShowDetails.toJS().posters && this.props.tvShowDetails.toJS().posters.forEach(p => posters.push(`${imageBaseURL}/${imageSize}/${p.file_path}`));
-
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.slider}>

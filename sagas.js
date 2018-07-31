@@ -8,7 +8,7 @@ import { loadMovieDetailsSagas, loadMovieExternalIdsSagas, loadCastSagas } from 
 
 import { loadPopularTVShowsSagas } from './src/containers/tvShowTabs/popular/sagas';
 import { loadTopRatedTVShowsSagas } from './src/containers/tvShowTabs/topRated/sagas';
-import { loadTVShowDetailsSagas, loadTVShowExternalIdsSagas, loadTVShowCastSagas } from './src/sharedComponents/tvShowDetailsPage/sagas';
+import { loadTVShowDetailsSagas, loadTVShowExternalIdsSagas, loadTVShowCastSagas,loadTVShowPostersSagas } from './src/sharedComponents/tvShowDetailsPage/sagas';
 export default function* rootSaga() {
     yield all([
         loadAPIConfigurationSagas(),
@@ -23,6 +23,7 @@ export default function* rootSaga() {
         loadTopRatedTVShowsSagas(),
         loadTVShowDetailsSagas(),
         loadTVShowExternalIdsSagas(),
-        loadTVShowCastSagas()
+        loadTVShowCastSagas(),
+        loadTVShowPostersSagas(),
     ])
 }
