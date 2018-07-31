@@ -14,6 +14,7 @@ import movieDetailReducer from './src/sharedComponents/detailsPage/reducer';
 import popularTVShowsReducer from './src/containers/tvShowTabs/popular/reducer';
 import topRatedTVShowsReducer from './src/containers/tvShowTabs/topRated/reducer';
 import tvShowDetailReducer from './src/sharedComponents/tvShowDetailsPage/reducer';
+import onTheAirTVShowsReducer from './src/containers/tvShowTabs/ontheAir/reducer';
 
 const navReducer = createNavigationReducer(RootNavigator);
 
@@ -27,5 +28,6 @@ export default combineReducers({
     movieDetails: movieDetailReducer,
     popularTVShows: popularTVShowsReducer,
     topRatedTVShows: topRatedTVShowsReducer,
-    tvShowDetails: tvShowDetailReducer
+    tvShowDetails: tvShowDetailReducer,
+    onTheAirTVShows: onTheAirTVShowsReducer
 });
