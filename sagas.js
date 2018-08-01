@@ -9,6 +9,7 @@ import { loadMovieDetailsSagas, loadMovieExternalIdsSagas, loadCastSagas } from 
 import { loadPopularTVShowsSagas } from './src/containers/tvShowTabs/popular/sagas';
 import { loadTopRatedTVShowsSagas } from './src/containers/tvShowTabs/topRated/sagas';
 import { loadOnTheAirTVShowsSagas } from './src/containers/tvShowTabs/ontheAir/sagas';
+import { loadAiringTodayTVShowsSagas } from './src/containers/tvShowTabs/airingToday/sagas';
 import { loadTVShowDetailsSagas, loadTVShowExternalIdsSagas, loadTVShowCastSagas, loadTVShowPostersSagas } from './src/sharedComponents/tvShowDetailsPage/sagas';
 export default function* rootSaga() {
     yield all([
@@ -27,5 +28,6 @@ export default function* rootSaga() {
         loadTVShowCastSagas(),
         loadTVShowPostersSagas(),
         loadOnTheAirTVShowsSagas(),
+        loadAiringTodayTVShowsSagas()
     ])
 }

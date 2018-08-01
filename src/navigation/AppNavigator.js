@@ -5,16 +5,21 @@ import {
   reduxifyNavigator,
   createReactNavigationReduxMiddleware,
 } from 'react-navigation-redux-helpers';
-import Movies from '../containers/movies/movies';
 
 // Movie Tab Pages
 import NowPlaying from '../containers/movieTabs/nowPlaying/nowPlaying';
 import TopRated from '../containers/movieTabs/topRated/topRated';
 import Popular from '../containers/movieTabs/popular/popular';
 import Upcoming from '../containers/movieTabs/upcoming/upcoming';
-
-import TVShows from '../containers/tvShows/tvShows';
 import DetailsPage from '../sharedComponents/detailsPage/detailPage';
+
+//TV Show Tabs Pages
+import PopularTVShows from '../containers/tvShowTabs/popular/popular';
+import TopRatedTVShows from '../containers/tvShowTabs/topRated/topRated';
+import OnTheAirTVShows from '../containers/tvShowTabs/ontheAir/ontheAir';
+import TVShowDetailPage from '../sharedComponents/tvShowDetailsPage/detailPage';
+import AiringTodayTVShows from '../containers/tvShowTabs/airingToday/airingToday'
+
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
 
 
@@ -68,6 +73,36 @@ const MovieTabStack = createBottomTabNavigator({
     },
   });
 
+const TVShowsTabStack = createBottomTabNavigator({
+  'Airing Today': { screen: AiringTodayTVShows },
+  'On The Air': { screen: OnTheAirTVShows },
+  'Top Rated': { screen: TopRatedTVShows },
+  'Trending': { screen: PopularTVShows },
+},
+  {
+    initialRouteName: 'Airing Today',
+    navigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, tintColor }) => {
+        const { routeName } = navigation.state;
+        let icon;
+        if (routeName === 'On The Air') {
+          icon = <MaterialIcons name="airplay" size={25} color={tintColor} />;
+        } else if (routeName === 'Airing Today') {
+          icon = <Entypo name="clock" size={25} color={tintColor} />;
+        } else if (routeName === "Top Rated") {
+          icon = <MaterialIcons name="star" size={25} color={tintColor} />;
+        } else if (routeName === 'Trending') {
+          icon = <MaterialIcons name="trending-up" size={25} color={tintColor} />;
+        }
+        return icon;
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: '#e00e0e',
+      inactiveTintColor: 'gray',
+    },
+  });
+
 const MoviesStack = createStackNavigator({
   Movies: {
     screen: MovieTabStack,
@@ -85,7 +120,7 @@ const MoviesStack = createStackNavigator({
     })
   },
   MovieDetails: {
-    screen: DetailsPage,
+    screen: TVShowDetailPage,
     navigationOptions: ({ navigation }) => ({
       headerTitle: navigation.state.params.title,
     })
@@ -104,12 +139,12 @@ const MoviesStack = createStackNavigator({
   });
 
 const TVShowsStack = createStackNavigator({
-  TVShows: { screen: TVShows },
-}, {
+  TVShows: {
+    screen: TVShowsTabStack,
     navigationOptions: ({ navigation }) => ({
       headerTitle: 'TV Shows',
       drawerLabel: 'TV Shows',
-      headerLeft: <MaterialIcons style={{ padding: 20 }} name="menu" size={35} color="white" onPress={() => navigation.toggleDrawer()} />,
+      headerLeft: <MaterialIcons style={{ paddingLeft: 20 }} name="menu" size={35} color="white" onPress={() => navigation.toggleDrawer()} />,
       headerStyle: {
         backgroundColor: '#e00e0e',
       },
@@ -117,7 +152,25 @@ const TVShowsStack = createStackNavigator({
       headerTitleStyle: {
         fontWeight: 'bold',
       },
-    }),
+    })
+  },
+  TVShowDetails: {
+    screen: TVShowDetailPage,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: navigation.state.params.title,
+    })
+  }
+},
+  {
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: '#e00e0e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    })
   });
 
 const RootNavigator = createDrawerNavigator({
@@ -131,7 +184,7 @@ const RootNavigator = createDrawerNavigator({
   }
 },
   {
-    initialRouteName: 'Movies',
+    initialRouteName: 'TV Shows',
     contentOptions: {
       activeTintColor: '#e00e0e',
     },
