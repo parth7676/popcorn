@@ -20,6 +20,8 @@ import OnTheAirTVShows from '../containers/tvShowTabs/ontheAir/ontheAir';
 import TVShowDetailPage from '../sharedComponents/tvShowDetailsPage/detailPage';
 import AiringTodayTVShows from '../containers/tvShowTabs/airingToday/airingToday'
 
+// People Pages
+import PeopleListing from '../containers/people/peopleListing/people';
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
 
 
@@ -109,6 +111,7 @@ const MoviesStack = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       headerTitle: 'Movies',
       drawerLabel: 'Movies',
+      drawerIcon: ({ tintColor }) => (<MaterialIcons name="movie" size={24} color={tintColor} />),
       headerLeft: <MaterialIcons style={{ paddingLeft: 20 }} name="menu" size={35} color="white" onPress={() => navigation.toggleDrawer()} />,
       headerStyle: {
         backgroundColor: '#e00e0e',
@@ -173,6 +176,24 @@ const TVShowsStack = createStackNavigator({
     })
   });
 
+const PeopleStack = createStackNavigator({
+  People: {
+    screen: PeopleListing,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'People',
+      drawerLabel: 'People',
+      headerLeft: <MaterialIcons style={{ paddingLeft: 20 }} name="menu" size={35} color="white" onPress={() => navigation.toggleDrawer()} />,
+      headerStyle: {
+        backgroundColor: '#e00e0e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    })
+  }
+});
+
 const RootNavigator = createDrawerNavigator({
   'Movies': {
     path: '/',
@@ -181,10 +202,14 @@ const RootNavigator = createDrawerNavigator({
   'TV Shows': {
     path: '/tvshows',
     screen: TVShowsStack
+  },
+  'Poeple': {
+    path: '/people',
+    screen: PeopleStack
   }
 },
   {
-    initialRouteName: 'TV Shows',
+    initialRouteName: 'Movies',
     contentOptions: {
       activeTintColor: '#e00e0e',
     },
