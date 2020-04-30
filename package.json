@@ -21,9 +21,15 @@
     "redux-axios-middleware": "^4.0.0",
     "redux-immutable": "^4.0.0",
     "redux-saga": "^0.16.0",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "react-native-debugger-open": "^0.3.17"
-  }
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
