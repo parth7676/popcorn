@@ -7,7 +7,7 @@
     "immutability-helper": "^2.7.1",
     "immutable": "^3.8.2",
     "language-list": "0.0.3",
-    "native-base": "^2.7.1",
+    "native-base": "^2.13.0",
     "react": "16.3.1",
     "react-image-palette": "^0.2.4",
     "react-native": "https://github.com/expo/react-native/archive/sdk-28.0.0.tar.gz",
