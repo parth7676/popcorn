@@ -13,7 +13,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-28.0.0.tar.gz",
     "react-native-image-slider": "^2.0.3",
     "react-native-vector-icons": "^4.6.0",
-    "react-navigation": "^2.6.2",
+    "react-navigation": "^5.0.0",
     "react-navigation-redux-helpers": "^2.0.2",
     "react-redux": "^5.0.7",
     "react-router-redux": "^4.0.8",
